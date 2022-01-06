@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #efefef;
+  font-family: cursive;
+}
+
+.nav-bar {
+  background-color: rgba(51, 51, 51, 0.966);
+  border: 2px solid rgba(255, 192, 203, 0.418);
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  width: 100%;
+  top: 0;
+
+  .list-container {
+    display: flex;
+  }
+
+  .list-item {
+    list-style-type: none;
+    margin: 20px;
+    margin: auto;
+  }
+
+  .anchor {
+    font-size: 17px;
+    text-decoration: none;
+    color: pink;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .Current-logo {
+    width: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    border: 2px solid pink;
+    background-image: url(/src/assets/Bokomon.jpg);
+    background-position: center;
+    background-size: cover;
+    padding: 30px;
+    border-radius: 100px;
+
+    .logo {
+      width: 30px;
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}
