@@ -1,6 +1,6 @@
 import fetchApiData from './API/responseAPI';
 import displayPokemon from './Display/displayBokomons';
-import counter from './Display/counter';
+import { counter } from './Display/counter';
 
 const pokemonTitle = document.getElementById('bokomonTitle');
 window.addEventListener('load', async () => {

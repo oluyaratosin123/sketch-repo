@@ -1,4 +1,6 @@
+import popWindow from './popModal';
 import fetchAllLikes from './responseLike';
+import postAllLikes from './newLikeAddOn';
 
 const displayPokemon = async (pokemon) => {
   pokemon.forEach((pokes) => {
@@ -40,8 +42,9 @@ const displayPokemon = async (pokemon) => {
         commentBtn.classList.add(pokesData.name, 'btn');
         commentBtn.innerHTML = 'comment';
         commentBtn.addEventListener('click', () => {
-          // This is for the comment modal...
+          popWindow(pokesData);
         });
+
         reservedList.appendChild(pokesImg);
         hearder1.appendChild(likeSection);
         reservedList.appendChild(hearder1);
@@ -52,6 +55,11 @@ const displayPokemon = async (pokemon) => {
         reservedList.appendChild(commentBtn);
         cards.appendChild(reservedList);
         await fetchAllLikes(pokesData, spanEle);
+
+        likeImg.addEventListener('click', async () => {
+          await postAllLikes(likeImg.id);
+          await fetchAllLikes(pokesData, spanEle);
+        })
       });
   });
 };
