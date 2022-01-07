@@ -4,4 +4,4 @@ const fetchApiData = async () => {
   );
   return response.json();
 };
-export default fetchApiData;
+export default fetchApiData ;

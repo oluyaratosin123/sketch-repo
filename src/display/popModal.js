@@ -1,162 +1,166 @@
 import { commentCounter } from './counter';
-import getAllComments from './getComments';
+import getAllComments from './getAllComments';
 import postAllComments from './postAllComments';
 
 const popWindow = (pokemon) => {
-    const modalPop = document.createElement('article');
-    modalPop.classList.add('modalPopUp');
+  const modalPop = document.createElement('article');
+  modalPop.classList.add('modalPopUp');
 
-    const modalContentList = document.createElement('div');
-    modalContentList.classList.add('modal-pop-menu');
+  const modalContentView = document.createElement('div');
+  modalContentView.classList.add('modal-pop-menu');
 
-    const frameSocket = document.createElement('div');
-    frameSocket.classList.add('image-frame');
+  const imageFrame = document.createElement('div');
+  imageFrame.classList.add('image-frame');
 
-    const modalClose = document.createElement('i');
-    modalClose.classList.add('fas', 'fa-times', 'modalClose');
-    modalClose.addEventListener('click', () => modalPop.remove());
+  const modalClose = document.createElement('i');
+  modalClose.classList.add('fas', 'fa-times', 'modalClose');
+  modalClose.addEventListener('click', () => modalPop.remove());
 
-    const modalSection = document.createElement('div');
-    modalSection.classList.add('modal-frame');
+  const internalFrame = document.createElement('div');
+  internalFrame.classList.add('modal-image-sect');
 
-    const imagingItem = document.createElement('img');
-    imagingItem.setAttribute('src', pokemon.sprites.other['official-artwork'].front_default);
-    imagingItem.setAttribute('alt', `${pokemon.name} official artwork`);
-    imagingItem.classList.add('modal-image-sect');
+  const images = document.createElement('img');
+  images.setAttribute('src', pokemon.sprites.other['official-artwork'].front_default);
+  images.setAttribute('alt', `${pokemon.name} official artwork`);
+  images.classList.add('modal-frame');
 
-    const pokesName = document.createElement('h2');
-    pokesName.classList.add('pokes-name');
-    pokesName.innerHTML = pokemon.name;
+  const pokesName = document.createElement('h3');
+  pokesName.classList.add('pokes-name');
+  pokesName.innerHTML = pokemon.name;
 
-    const pokesType = document.createElement('h3');
-    pokesType.innerHTML = 'Type';
+  const pokesType = document.createElement('h4');
+  pokesType.innerHTML = 'Type';
 
-    const typeListCard = document.createElement('ul');
-    typeListCard.classList.add('type-list-cards');
+  const listOfType = document.createElement('ul');
+  listOfType.classList.add('type-list-cards');
 
-    const firstListCard = document.createElement('li');
-    firstListCard.innerHTML = pokemon.types[0].type.name;
+  const listType1 = document.createElement('li');
+  listType1.innerHTML = pokemon.types[0].type.name;
 
-    let secondListCard = document.createElement('li');
-    if (pokemon.types.length === 2) {
-        secondListCard.innerHTML = pokemon.types[1].type.name;
-    } else {
-        typeListCard.classList.add('centerCardItems');
-        secondListCard = false;
-    }
+  let listType2 = document.createElement('li');
+  if (pokemon.types.length === 2) {
+    listType2.innerHTML = pokemon.types[1].type.name;
+  } else {
+    listOfType.classList.add('justify');
+    listType2 = false;
+  }
 
-    const locationTitle = document.createElement('h4');
-    locationTitle.innerHTML = 'Location';
+  const locationTitleName = document.createElement('h4');
+  locationTitleName.innerHTML = 'Location';
 
-    const location = document.createElement('p');
-    fetch(pokemon.location_area_encounters)
+  const locationContentType = document.createElement('p');
+  fetch(pokemon.location_area_encounters)
     .then((response) => response.json())
     .then((locations) => {
-        if (locations.length > 1) {
-            location.innerHTML = locations[0].location_area.name || 'Evolution';
-        } else {
-            location.innerHTML = 'Evolution';
-        }
-    });
-
-    const commentsTitle = document.createElement('h4');
-    commentsTitle.innerHTML = 'Comments';
-
-    const comments = document.createElement('ul');
-    comments.classList.add('comments');
-
-    const showAllComments = () => {
-        comments.innerHTML = '';
-        getAllComments(pokemon.name).then((pokesComments) => {
-            for (let i = 0; i < pokesComments.length; i += 1) {
-                const comment = document.createElement('li');
-                const pokesComment = pokesComments[i];
-                comment.innerHTML = `
-                ${pokesComment.creation_date}
-                ${pokesComment.username} :
-                ${pokesComment.comment}
-                `;
-                comments.appendChild(comment);
-            }
-            commentCounter(pokesComments, commentsTitle, comments);
-        });
-    };
-
-    showAllComments();
-
-    const addCommentTitle = document.createElement('h4');
-    addCommentTitle.innerHTML = 'Add your comment...';
-
-    const addComment = document.createElement('form');
-    addComment.classList.add('add-some-comments');
-
-    const inputName = document.createElement('input');
-    inputName.setAttribute('type', 'text');
-    inputName.setAttribute('name', 'name');
-    inputName.setAttribute('placeholder', 'Your name...');
-    inputName.setAttribute('id', 'name');
-
-    const textAreaContent = document.createElement('textarea');
-    textAreaContent.setAttribute('name', 'comment');
-    textAreaContent.setAttribute('id', 'comment');
-    textAreaContent.setAttribute('placeholder', 'Write your comments...');
-
-    const message = document.createElement('small');
-    message.classList.add('error');
-    message.innerHTML = '';
-
-    const submitionBtn = document.createElement('button');
-    submitionBtn.setAttribute('type', 'button');
-    submitionBtn.setAttribute('id', 'submit-Btn');
-    submitionBtn.innerHTML = 'Comment';
-    submitionBtn.addEventListener('click', () => {
-      if (inputName.value.length < 1 || inputName.value.length > 8) {
-          inputName.classList.add('danger');
-          textAreaContent.classList.remove('danger');
-          message.innerHTML = '*Your name should be part of a list between 1 and 8 characters*';
-      } else if (textAreaContent.value.length < 5 || textAreaContent.value.length > 100) {
-          inputName.classList.remove('danger');
-          textAreaContent.classList.add('danger');
-          message.innerHTML = 'Comment should have a list between 5 and 100 characters';
+      if (locations.length > 1) {
+        location.innerHTML = locations[0].location_area.name || 'Evolution';
       } else {
-          postAllComments(inputName.value, textAreaContent.value, pokemon.name)
-          .then(() => (getAllComments(pokemon.name)).then(() => showAllComments()));
-          inputName.classList.remove('danger');
-          textAreaContent.classList.remove('danger');
-          addComment.reset();
+        locationContentType.innerHTML = 'Evolution';
       }
     });
 
-    modalSection.appendChild(imagingItem);
+  const commentsTitle = document.createElement('h4');
+  commentsTitle.innerHTML = 'Comments';
 
-    frameSocket.appendChild(modalClose);
-    frameSocket.appendChild(modalSection);
+  const comments = document.createElement('ul');
+  comments.classList.add('comments');
 
-    typeListCard.appendChild(firstListCard)
-    if (secondListCard) {
-        typeListCard.appendChild(secondListCard);
+  const showAllComments = () => {
+    comments.innerHTML = '';
+    getAllComments(pokemon.name).then((pokesComments) => {
+      for (let i = 0; i < pokesComments.length; i += 1) {
+        const comment = document.createElement('li');
+        const pokesComment = pokesComments[i];
+        comment.innerHTML = `
+        <div class="viewComments">
+          <h5 class="dateCreated"> ${pokesComment.creation_date} </h5> 
+          <ul class="commentContents"> 
+          <li class="viewName"> ${pokesComment.username} : </li>
+          <li class="commentDetails">${pokesComment.comment}</li> 
+          </ul>
+        </div>
+          `;
+        comments.appendChild(comment);
+      }
+      commentCounter(pokesComments, commentsTitle, comments);
+    });
+  };
+
+  showAllComments();
+
+  const addCommentTitle = document.createElement('h4');
+  addCommentTitle.innerHTML = 'Add a comment';
+
+  const addComment = document.createElement('form');
+  addComment.classList.add('add-some-comments');
+
+  const inputName = document.createElement('input');
+  inputName.setAttribute('type', 'text');
+  inputName.setAttribute('name', 'name');
+  inputName.setAttribute('placeholder', 'Your name');
+  inputName.setAttribute('id', 'name');
+
+  const textArea = document.createElement('textarea');
+  textArea.setAttribute('name', 'comment');
+  textArea.setAttribute('id', 'comment');
+  textArea.setAttribute('placeholder', 'Your Comment');
+
+  const messages = document.createElement('small');
+  messages.classList.add('error');
+  messages.innerHTML = '';
+
+  const submitionBtn = document.createElement('button');
+  submitionBtn.setAttribute('type', 'button');
+  submitionBtn.setAttribute('id', 'submit-btn');
+  submitionBtn.innerHTML = 'Comment';
+  submitionBtn.classList.add('newComment');
+  submitionBtn.addEventListener('click', () => {
+    if (inputName.value.length < 1 || inputName.value.length > 8) {
+      inputName.classList.add('danger');
+      textArea.classList.remove('danger');
+      messages.innerHTML = '*Your name should at least have a list between 8 and 10 characters*';
+    } else if (textArea.value.length < 5 || textArea.value.length > 100) {
+      inputName.classList.remove('danger');
+      textArea.classList.add('danger');
+      messages.innerHTML = 'Your comment should have a list between 10 and 100 cha';
+    } else {
+      postAllComments(inputName.value, textArea.value, pokemon.name)
+        .then(() => (getAllComments(pokemon.name)).then(() => showAllComments()));
+        inputName.classList.remove('danger');
+      textArea.classList.remove('danger');
+      addComment.reset();
     }
+  });
 
-    addComment.appendChild(inputName);
-    addComment.appendChild(textAreaContent);
-    addComment.appendChild(message);
-    addComment.appendChild(submitionBtn);
+  internalFrame.appendChild(images);
 
+  imageFrame.appendChild(modalClose);
+  imageFrame.appendChild(internalFrame);
 
-    modalContentList.appendChild(frameSocket);
-    modalContentList.appendChild(pokesName);
-    modalContentList.appendChild(pokesType);
-    modalContentList.appendChild(typeListCard);
-    modalContentList.appendChild(locationTitle);
-    modalContentList.appendChild(location);
-    modalContentList.appendChild(commentsTitle);
-    modalContentList.appendChild(comments);
-    modalContentList.appendChild(addCommentTitle);
-    modalContentList.appendChild(addComment);
+  listOfType.appendChild(listType1);
+  if (listType2) {
+    listOfType.appendChild(listType2);
+  }
 
-    modalPop.appendChild(modalContentList);
+  addComment.appendChild(inputName);
+  addComment.appendChild(textArea);
+  addComment.appendChild(messages);
+  addComment.appendChild(submitionBtn);
 
-    document.body.appendChild(modalPop);
+  modalContentView.appendChild(imageFrame);
+  modalContentView.appendChild(pokesName);
+  modalContentView.appendChild(pokesType);
+  modalContentView.appendChild(listOfType);
+  modalContentView.appendChild(locationTitleName);
+  modalContentView.appendChild(locationContentType);
+  modalContentView.appendChild(commentsTitle);
+  modalContentView.appendChild(comments);
+  modalContentView.appendChild(addCommentTitle);
+  modalContentView.appendChild(addComment);
+
+  modalPop.appendChild(modalContentView);
+
+  document.body.appendChild(modalPop);
 };
 
 export default popWindow;

@@ -1,10 +1,10 @@
-import fetchApiData from './API/responseAPI';
-import displayPokemon from './Display/displayBokomons';
+import fetchApiData from './API/responseApiData';
+import displayBokomons from './Display/displayBokomons';
 import { counter } from './Display/counter';
 
-const pokemonTitle = document.getElementById('bokomonTitle');
+const pokeTitle = document.getElementById('bokomonTitle');
 window.addEventListener('load', async () => {
   const res = await fetchApiData();
-  pokemonTitle.innerHTML = `Bokomon(${counter(res.results)})`;
-  await displayPokemon(res.results);
+  pokeTitle.innerHTML = `Pokemon(${counter(res.results)})`;
+  await displayBokomons(res.results);
 });

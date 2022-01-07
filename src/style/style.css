@@ -53,7 +53,7 @@ img {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 6px 6px 6px rgba(255, 192, 203, 0.692);
-  margin: 30px;
+  margin: 10px;
   padding: 10px;
 }
 img:hover {
@@ -80,11 +80,16 @@ li {
   margin-top: 20px;
   width: 250px;
   border-radius: 5px;
-  border: 2px solid #007bff83;
+  border: 2px solid #007bff;
   font-family: cursive;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
+}
+.btn:hover {
+  background-color: rgba(51, 51, 51, 0.774);
+  color: #fff;
+  transition: 1s;
 }
 
 .card-items {
@@ -94,14 +99,36 @@ li {
   margin-bottom: 30px;
 }
 
-.fa-heart {
+.heart {
   color: #dc3545;
   cursor: pointer;
   font-size: 20px;
   width: 50px;
 }
 
+.unordered {
+  display: flex;
+  justify-content: space-around;
+  background-color: #efefef;
+  font-size: 18px;
+  padding: 10px;
+  margin: 25px;
+  border-radius: 5px;
+}
+
+.cardSection {
+  background-color: rgba(128, 128, 128, 0.205);
+  border-radius: 5px;
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+}
+
+h1 {
+  font-size: 25px;
+}
+
 .modalPopUp {
+  font-family: cursive;
   position: fixed;
   top: 0;
   width: 100%;
@@ -111,8 +138,10 @@ li {
 
 .modalPopUp h4 {
   font-size: 20px;
-  margin-top: 15px;
-  margin-bottom: 10px;
+}
+
+.modal-frame {
+  box-shadow: none;
 }
 
 .modal-pop-menu {
@@ -120,11 +149,14 @@ li {
   flex-direction: column;
   align-items: center;
   background: #fff;
-  height: 80vh;
+  width: 450px;
+  height: 85vh;
   padding-bottom: 20px;
-  margin: 50px;
-  border-radius: 15px;
+  margin: auto;
+  margin-top: 35px;
+  border-radius: 5px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .image-frame {
@@ -134,22 +166,15 @@ li {
 
 .modalClose {
   position: fixed;
-  top: 70px;
-  right: 7.5%;
+  top: 50px;
+  right: 480px;
   font-size: 30px;
   cursor: pointer;
   color: #333;
   transition: 0.3s;
 }
-
 .modalClose:hover {
-  color: pink;
-}
-
-.modal-frame {
-  background-color: white;
-  width: 250px;
-  margin: auto;
+  color: #28a745;
 }
 
 .modal-image-sect {
@@ -160,31 +185,44 @@ li {
 
 .pokes-name {
   font-size: 32px;
-  margin-top: 50px;
 }
 
 .type-list-cards {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
+  font-family: sans-serif;
   width: 50%;
 }
 
 .add-some-comments {
-  display: flex;
   flex-direction: column;
-  margin: auto;
+  text-align: center;
+  padding: 10px;
   width: 90%;
+}
+
+button {
+  padding: 10px;
+  font-family: cursive;
+  font-weight: 700;
+  font-size: 15px;
+  border: 2px solid #007bff83;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .modalPopUp input,
 .modalPopUp textarea {
-  margin-top: 15px;
-  width: 100%;
+  font-family: cursive;
+  margin-bottom: 10px;
+  width: 250px;
   padding: 10px;
+  display: block;
 }
 
 .modalPopUp textarea {
+  width: 250px;
   height: 100px;
 }
 
@@ -199,6 +237,51 @@ li {
   height: 40px;
   margin: auto;
   margin-top: 20px;
+}
+
+.justify {
+  justify-content: center !important;
+}
+
+.type-list-cards {
+  border: 2px solid #dc35460e;
+  border-radius: 5px;
+  font-family: cursive;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.viewComments {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #efefef;
+}
+
+.dateCreated {
+  font-size: 15px;
+  font-weight: 700;
+  color: #007bff;
+  width: 100px;
+}
+
+.viewName {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: sans-serif;
+  display: flex;
+}
+
+.commentDetails {
+  font-size: 14px;
+}
+
+.newComment {
+  width: 150px;
+}
+.newComment:hover {
+  background-color: rgba(51, 51, 51, 0.774);
+  color: #fff;
+  transition: 1s;
 }
 
 .footer-content {

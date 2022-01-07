@@ -1,66 +1,68 @@
 import popWindow from './popModal';
-import fetchAllLikes from './responseLike';
-import postAllLikes from './newLikeAddOn';
+import fetchAllLikes from './responseLikes';
+import postAllLikes from './postAllLike';
 
-const displayPokemon = async (pokemon) => {
-  pokemon.forEach((pokes) => {
-    fetch(pokes.url)
+const displayBokomons = async (pokemon) => {
+  pokemon.forEach((poke) => {
+    fetch(poke.url)
       .then((response) => response.json())
-      .then(async (pokesData) => {
-        const cards = document.getElementById('card-view');
-        const bokumonVarieties = pokesData.types;
-        const bokumonsImgs = pokesData.sprites.other;
-        const reservedList = document.createElement('li');
-        reservedList.classList.add('card-items');
-        const pokesImg = document.createElement('img');
-        pokesImg.setAttribute(
-          'src',
-          `${bokumonsImgs['official-artwork'].front_default}`,
-        );
-        pokesImg.setAttribute('alt', 'pokemon');
+      .then(async (pokeData) => {
+        const cardViewSection = document.getElementById('card-view');
+        const pokesTypes = pokeData.types;
+        const pokemonsImage = pokeData.sprites.other;
 
-        const hearder1 = document.createElement('h2');
-        hearder1.textContent = `${pokesData.name}`;
+        const externalList = document.createElement('li');
+        externalList.classList.add('cardSection');
 
-        const likeSection = document.createElement('span');
-        likeSection.classList = 'likeSect';
+        const pokesImage = document.createElement('img');
+        pokesImage.setAttribute('src', `${pokemonsImage['official-artwork'].front_default}`);
+        pokesImage.setAttribute('alt', 'Pokemon');
 
-        const likeImg = document.createElement('i');
-        likeImg.classList.add('fas', 'fa-heart', 'heart');
-        likeImg.setAttribute('id', `${pokesData.name}`);
+        const header1 = document.createElement('h1');
+        header1.innerHTML = `${pokeData.name}`;
 
-        const spanEle = document.createElement('div');
+        const likeSect = document.createElement('div');
+        likeSect.className = 'likes-div';
+
+        const likeImage = document.createElement('i');
+        likeImage.classList.add('fas', 'fa-heart', 'heart');
+        likeImage.setAttribute('id', `${pokeData.name}`);
+
+        const spanEle = document.createElement('span');
         spanEle.setAttribute('id', 'like');
 
-        const listContainer = document.createElement('ul');
-
-        bokumonVarieties.forEach((pokemon) => {
-          listContainer.innerHTML += `<li> ${pokemon.type.name} </li>`;
+        const ul = document.createElement('ul');
+        ul.classList.add('unordered')
+        pokesTypes.forEach((pokemon) => {
+          ul.innerHTML += `<li class="pokesType">${pokemon.type.name}</li>`;
         });
+
         const commentBtn = document.createElement('button');
         commentBtn.setAttribute('type', 'button');
-        commentBtn.classList.add(pokesData.name, 'btn');
-        commentBtn.innerHTML = 'comment';
+        commentBtn.classList.add(pokeData.name, 'btn');
+        commentBtn.innerHTML = 'Comment';
         commentBtn.addEventListener('click', () => {
-          popWindow(pokesData);
+          popWindow(pokeData);
         });
 
-        reservedList.appendChild(pokesImg);
-        hearder1.appendChild(likeSection);
-        reservedList.appendChild(hearder1);
-        likeSection.appendChild(likeImg);
-        reservedList.appendChild(spanEle);
+        externalList.appendChild(pokesImage);
+        externalList.appendChild(header1);
+        likeSect.appendChild(likeImage);
+        likeSect.appendChild(spanEle);
+        externalList.appendChild(likeSect);
+        externalList.appendChild(ul);
+        externalList.appendChild(commentBtn);
 
-        // Append all uls'
-        reservedList.appendChild(commentBtn);
-        cards.appendChild(reservedList);
-        await fetchAllLikes(pokesData, spanEle);
+        cardViewSection.appendChild(externalList);
 
-        likeImg.addEventListener('click', async () => {
-          await postAllLikes(likeImg.id);
-          await fetchAllLikes(pokesData, spanEle);
-        })
+        await fetchAllLikes(pokeData, spanEle);
+
+        likeImage.addEventListener('click', async () => {
+          await postAllLikes(likeImage.id);
+          await fetchAllLikes(pokeData, spanEle);
+        });
       });
   });
 };
-export default displayPokemon;
+
+export default displayBokomons;
